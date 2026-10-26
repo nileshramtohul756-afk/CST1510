@@ -13,27 +13,35 @@ Delete these instructions as you replace them with your code.
 """
 
 
-used = int(input("Enter used: "))
-total = int(input("Enter total: "))
-difference = total - used     # calculates how much is free
-percent = (used/total) * 100  # calculates percentage used
+over_limit_count = 0
+
+while True:
+ dataset_name = input("Enter dataset name (type 'quit' to stop): ")
+ if dataset_name == "quit":
+    break
+
+ rows_loaded = float(input("Enter rows loaded: "))
+ rows_expected = float(input("Enter rows expected: "))
+ free = rows_expected - rows_loaded    
+ percent = (rows_loaded/rows_expected) * 100  
+ if percent >= 100:
+    status = "OVER LIMIT"
+    over_limit_count += 1
+ elif percent >= 90:
+    status = "WARNING"
+ else:
+    status = "OK"    
 
 
-print()
-print("=" *34 )
-print("   RECORD CHECK  -  srv-01")
-print("=" *34 )
-print(f"{" " * 2}Used{" " * 9}:{used:>11.2f}")  # number used is right aligned by 11 with 2 decimal places
-print(f"{" " * 2}Total{" " * 8}:{total:>11.2f}")  # total is right aligned by 11 with 2 decimal places
-print(f"{" " * 2}Free{" " * 9}:{difference:>11.2f}")  # the difference is right aligned by 11 with 2 decimal places
-print(f"{" " * 2}Percent{" " * 6}:{percent:>11.2f} %")   # the percentage used is right aligned by 11 with 2 decimal places
+ print()
+ print("=" *34 )
+ print(f"   RECORD CHECK  -  {dataset_name}")
+ print("=" *34 )
+ print(f"{" " * 2}Used{" " * 9}:{rows_loaded:>11.2f}")  
+ print(f"{" " * 2}Total{" " * 8}:{rows_expected:>11.2f}")  
+ print(f"{" " * 2}Free{" " * 9}:{free:>11.2f}")  
+ print(f"{" " * 2}Percent{" " * 6}:{percent:>11.2f} %") 
+ print(f"{" " * 2}Status{" " * 7}:{status:>11}")
+ print("=" *34 )
 
-if used >= total and percent >= 100:                    # 2 conditions to be satisfied to display the status
-    print(f"{" " * 2}Status{" " * 7}:{" " * 9}OVER LIMIT")
-elif used < total and percent >= 90:
-    print(f"{" " * 2}Status{" " * 7}:{" " * 9}WARNING")  
-else:
-    print(f"{" " * 2}Status{" " * 7}:{" " * 9}OK")
-
-print("=" *34 )
-
+print(f"Total record OVER LIMIT: {over_limit_count}")
