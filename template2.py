@@ -12,35 +12,28 @@ Work through the numbered sections in order. Each one tells you what it must do.
 Delete these instructions as you replace them with your code.
 """
 
-"""Calculates free rows, percentage of rows loaded, assigns a bordered report for each dataset and keeps track of how 
-   many datasets were "OVER LIMIT".
-"""
 over_limit_count = 0
 
-
-
-while True:     #starts an infinite loop to process many datasets in one session
- dataset_name = input("Enter dataset name (type 'quit' to stop): ")    # asks user for dataset name
+while True: 
+ dataset_name = input("Enter dataset name (type 'quit' to stop): ") # asks for dataset name and stores it as a string
+                                                                          
  if dataset_name == "quit":
-    break   # loop is broken if quit is entered
+    break # breaks the loop if the user types 'quit'
 
- rows_loaded = float(input("Enter rows loaded: "))
- rows_expected = float(input("Enter rows expected: "))
- free = rows_expected - rows_loaded      # calculates available rows
- percent = (rows_loaded/rows_expected) * 100    # calculates percentage of rows loaded
-
- # dertermines status based on the threshold of the percentage
- if percent >= 100:
+ rows_loaded = float(input("Enter rows loaded: ")) # asks for rows loaded and stores it as a float
+ rows_expected = float(input("Enter rows expected: ")) # asks for rows expected and stores it as a float
+ free = rows_expected - rows_loaded    
+ percent = (rows_loaded/rows_expected) * 100  
+ if percent >= 100: 
     status = "OVER LIMIT"
-    over_limit_count += 1    # increases the counter for over limit record  by 1
+    over_limit_count += 1 # over_limit_count is incremented by 1 if the percent is greater than or equal to 100
  elif percent >= 90:
     status = "WARNING"
  else:
     status = "OK"    
 
 
- # prints a bordered report based on the given dataset
- print()  
+ print()
  print("=" *34 )
  print(f"   RECORD CHECK  -  {dataset_name}")
  print("=" *34 )
@@ -51,4 +44,4 @@ while True:     #starts an infinite loop to process many datasets in one session
  print(f"{" " * 2}Status{" " * 7}:{status:>11}")
  print("=" *34 )
 
-print(f"Total record OVER LIMIT: {over_limit_count}") # prints the number of OVER LIMIT counted
+print(f"Total record OVER LIMIT: {over_limit_count}")
