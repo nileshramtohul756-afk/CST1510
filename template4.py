@@ -17,7 +17,7 @@ def check_record(value,limit):
     difference = limit - value
     percent = (value/limit) * 100
 
-    if percent >= 100:
+    if percent >= 100: # derives the status based on the percentage of rows loaded
         status = "OVER LIMIT"
     elif percent >= 90:
         status = "WARNING"
@@ -25,7 +25,7 @@ def check_record(value,limit):
         status = "OK"
     
 
-    return difference, percent, status          
+    return difference, percent, status # returns the difference, percent and status as a tuple
 
 
 def print_report(label, value, limit, difference, percent, status):
@@ -44,7 +44,7 @@ def print_report(label, value, limit, difference, percent, status):
 def load_records(path):
     """Reads label,value,limit from file and returns a list of dicts"""
     record = []
-    try:
+    try: # tries to open the file and read its contents, if the file is not found it will catch the error and print a message
         with open(path) as f:
             for content in f:
                 label, value, limit = content.strip().split(",")
@@ -60,12 +60,12 @@ def load_records(path):
     return record
 
 records = load_records("my_data.txt")
-for line in records:
-    dataset_name = line["label"]
+for line in records: # iterates through the list of dictionaries and extracts the values for each record
+    dataset_name = line["label"] #
     rows_loaded = line["value"]
     rows_expected = line["limit"]
 
-    difference, percent, status = check_record(rows_loaded, rows_expected)
+    difference, percent, status = check_record(rows_loaded, rows_expected) #
 
     print_report(dataset_name, rows_loaded, rows_expected, difference, percent, status)
 
